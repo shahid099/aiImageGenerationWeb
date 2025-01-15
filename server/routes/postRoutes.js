@@ -17,7 +17,7 @@ cloudinary.config({
 router.get('/', async (req, res)=> {
     try {
         const posts = await Post.find({});
-        res.status(200).json({ success: true, data: posts })
+        res.status(200).json({ success: true, message: "Uploaded Posts fetched", data: posts })
     } catch (error) {
         res.status(500).json({ success: false, message: 'Fetching posts failed, please try again' });
     }
@@ -36,9 +36,8 @@ router.post('/', async (req, res)=> {
             prompt,
             photo: photoUrl.url,
         });
-        console.log(newPost);
     
-        res.status(200).json({ success: true, data: newPost });
+        res.status(200).json({ success: true, message: "Post Saved Successfully.", data: newPost });
 
     } catch (error) {
         res.status(500).json({ success: false, message: 'Unable to create a post, please try again' });

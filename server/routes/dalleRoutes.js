@@ -10,7 +10,6 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
 });
 
-
 router.post('/', async (req, res)=> {
     try {
         const { prompt } = req.body;
@@ -25,8 +24,12 @@ router.post('/', async (req, res)=> {
         console.log("response: ", response);
         res.status(200).json( response.data[0].url );
     } catch (error) {
-        console.log(error);
-        res.status(500).send(error?.response.data.error.message)
+        res.status(500).json({
+            error: error,
+            message: error.message, 
+            success: false
+        })
+        // res.status(500).send(error?.response?.data?.error.message)
     }
 })
 
