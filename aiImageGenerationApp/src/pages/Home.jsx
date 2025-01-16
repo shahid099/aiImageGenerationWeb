@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Loader, Card, FormField } from '../components';
+import { toast } from 'react-toastify';
 
 const RenderCards = ({ data, title })=> {
     
@@ -26,20 +27,22 @@ const Home = () => {
     const fetchPosts = async ()=> {
         setLoading(true);
         try {
-            const response = await fetch('https://aiimagegenerationweb.onrender.com/api/v1/post', {
+            const response = await fetch(`/api/v1/post`, {
                 method: 'GET', 
                 headers: {
+                    // "access-control-allow-origin" : "*",
                     'Content-Type': 'application/json',
                 },
             })
 
             if(response.ok) {
                 const result = await response.json();
-                setAllPosts(result.data.reverse());
-                
+                setAllPosts(result.data.reverse())
+                toast(result.message)
             }
         } catch (error) {
-            alert(error);
+            console.log(error.message);
+            toast(response.message);
         } finally {
             setLoading(false);
         }

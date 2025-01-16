@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
+import { toast } from 'react-toastify';
 const CreatePost = () => {
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -17,9 +18,12 @@ const CreatePost = () => {
         if(form.prompt) {
             try {
                 setGeneratingImg(true);
-                const response = await fetch('https://aiimagegenerationweb.onrender.com/api/v1/dalle', {
+                // render url string
+                // https://aiimagegenerationweb.onrender.com
+                const response = await fetch('/api/v1/dalle', {
                     method: 'POST',
                     headers: {
+                        // "access-control-allow-origin" : "*",
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ prompt: form.prompt }),
@@ -29,12 +33,12 @@ const CreatePost = () => {
                 setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
             } catch (error) {
                 console.log(error.message);
-                alert(error);
+                toast(data.message);
             } finally {
                 setGeneratingImg(false);
             }
         } else {
-            alert('Please enter a prompt');
+            toast("Please enter a Prompt");
         }
     }
 
@@ -46,7 +50,7 @@ const CreatePost = () => {
             setLoading(true);
 
             try {
-                const response = await fetch('https://aiimagegenerationweb.onrender.com/api/v1/post', {
+                const response = await fetch('/api/v1/post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,9 +58,10 @@ const CreatePost = () => {
                     body: JSON.stringify(form)
                 })
                 const json = await response.json();
-                console.log(json);
                 navigate('/');
             } catch (error) {
+                console.log(error.message);
+                toast(json.message);
                 alert(error);
             } finally {
                 setLoading(false);
