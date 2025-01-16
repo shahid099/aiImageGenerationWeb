@@ -1,6 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { OpenAI } from 'openai';
+import OpenAI from "openai";
 
 dotenv.config();
 
@@ -21,15 +21,13 @@ router.post('/', async (req, res)=> {
             size: "1024x1024",
           });
 
-        console.log("response: ", response);
-        res.status(200).json( response.data[0].url );
-    } catch (error) {
+          res.status(200).json( response.data[0].url );
+        } catch (error) {
         res.status(500).json({
             error: error,
             message: error.message, 
             success: false
         })
-        // res.status(500).send(error?.response?.data?.error.message)
     }
 })
 

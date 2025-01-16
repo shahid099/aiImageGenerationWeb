@@ -20,7 +20,7 @@ const CreatePost = () => {
                 setGeneratingImg(true);
                 // render url string
                 // https://aiimagegenerationweb.onrender.com
-                const response = await fetch('https://aiimagegenerationweb.onrender.com/api/v1/dalle', {
+                const response = await fetch('/api/v1/dalle', {
                     method: 'POST',
                     headers: {
                         // "access-control-allow-origin" : "*",
@@ -50,7 +50,7 @@ const CreatePost = () => {
             setLoading(true);
 
             try {
-                const response = await fetch('https://aiimagegenerationweb.onrender.com/api/v1/post', {
+                const response = await fetch('/api/v1/post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -99,9 +99,9 @@ const CreatePost = () => {
                 handleChange = {handleChange}
             />
             <FormField 
-                LabelName="Prompt" 
+                LabelName="prompt" 
                 type="text" 
-                name="Prompt" 
+                name="prompt" 
                 placeholder="A plush toy robot sitting against a yellow wall" 
                 value={form.prompt} 
                 handleChange = {handleChange} 

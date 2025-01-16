@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
-import { Home, CreatePost } from './pages';
+import { Home, CreatePost, Footer, PageNotFound } from './pages';
 import { logo } from './assets';
 import { ToastContainer } from 'react-toastify';
 
@@ -24,8 +24,12 @@ function App() {
         <Routes>
           <Route path='/' element = {<Home />} />
           <Route path='/create-post' element = {<CreatePost />} />
+          <Route path='/page-not-found' element= {<PageNotFound/>}/>
         </Routes>
       </main>
+      <footer>
+          <Footer />
+      </footer>
     </BrowserRouter>
   )
 }
